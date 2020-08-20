@@ -2,7 +2,7 @@ let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
 let snake = [];
-let direction = "right";
+let direction = "";
 let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
@@ -40,22 +40,25 @@ function updateMove(e){
 }
 
 function game(){
-    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
-    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
-    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
-    if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+
+    createBG();
+    createSnake();
+    drawFood();
+    
+    if(snake[0].x >= 15 * box && direction == "right") snake[0].x = 0 - box;
+    if(snake[0].x <= 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y >= 15 * box && direction == "down") snake[0].y = 0 - box;
+    if(snake[0].y <= 0 && direction == "up") snake[0].y = 16 * box;
+    
+    
 
     for (let i = 1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
-            clearInterval(game);
+            clearInterval(beginGame);
             alert("GAME OVER ):");
         }
     }
     
-    createBG();
-    createSnake();
-    drawFood();
-
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
